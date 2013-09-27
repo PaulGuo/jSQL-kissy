@@ -1,13 +1,13 @@
 {
     "name": "jSQL-kissy",
     "version": "1.0",
-    "desc": "",
+    "desc": "一个通过类似SQL语法的链式操作实现对JavaScript前端数据结构进行排序、筛选、查询等数据操作的方法库。",
     "cover": "",
-    "tag":"",
+    "tag":"jSQL",
     "author": {
         "name": "liuhuo.gk",
         "email": "badkaikai@gmail.com",
-        "page": ""
+        "page": "https://github.com/PaulGuo/jSQL-kissy"
     },
     "type": "kissy-gallery",
     "type-url": "http://gallery.kissyui.com/guide"
