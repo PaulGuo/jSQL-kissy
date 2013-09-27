@@ -1,0 +1,14 @@
+{
+    "name": "jSQL-kissy",
+    "version": "1.0",
+    "desc": "",
+    "cover": "",
+    "tag":"",
+    "author": {
+        "name": "liuhuo.gk",
+        "email": "badkaikai@gmail.com",
+        "page": ""
+    },
+    "type": "kissy-gallery",
+    "type-url": "http://gallery.kissyui.com/guide"
+}
