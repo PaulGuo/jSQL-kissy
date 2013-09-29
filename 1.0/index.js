@@ -28,7 +28,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     a SQL like database using javascript
     website: http://jsql.us
     licence: MIT Licence
-    version: 0.6.0-dev
+    version: 0.7.0-dev
     
     description: using jSQL to process the data easily.
 */
@@ -51,6 +51,38 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         _DBIndexMap = {}, 
         _protected = {},
         _events = {};
+
+    var logcat = {
+        error: function(error) {
+            if(typeof(console) !== 'undefined') {
+                if(console.warn) {
+                    console.warn(error);
+                    return;
+                }
+
+                if(console.log) {
+                    console.log(error);
+                    return;
+                }
+            }
+
+            throw(error);
+        },
+
+        info: function(info) {
+            if(typeof(console) !== 'undefined') {
+                if(console.info) {
+                    console.info(info);
+                    return;
+                }
+
+                if(console.log) {
+                    console.log(info);
+                    return;
+                }
+            }
+        }
+    };
     
     if(typeof(this.jSQL) !== 'undefined') {
         _jSQL = this.jSQL;
@@ -65,7 +97,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     };
     
     jSQL.prototype = {
-        version: '0.6.0-dev',
+        version: '0.7.0-dev',
 
         init: function() {
             this._jSQL = _jSQL;
@@ -86,7 +118,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             var that = this;
 
             if(this._DB.hasOwnProperty(dbname)) {
-                throw('DB Already Exist.');
+                logcat.error('DB Already Exist.');
             }
 
             if(utils.isArray(db)) {
@@ -101,7 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 db = utils.objectToArray(db);
             }
 
-            if(typeof(db) === 'string' && db.match(/^http(s)?:\/\//igm)) {
+            if(typeof(db) === 'string' && db.match(/^http(s)?:///igm)) {
                 var scope = arguments[2] || '*';
                 var proxyCallback = function(data) {
                     db = typeof(scope) === 'function' ? 
@@ -489,7 +521,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 error = args[3];
 
                 if(!uri.match('callback=')) {
-                    if(uri.match(/\?/igm)) {
+                    if(uri.match(/?/igm)) {
                         if(uri.lastIndexOf('&') === uri.length - 1) {
                             uri += 'callback=?&_t=' + utils.uuid();
                         } else {
@@ -526,7 +558,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 return false;
             }
 
-            console.log('%s: trigger - %s', database, event);
+            logcat.info('%s: trigger - %s', database, event);
             return this._events[database].trigger.apply(this._events[database], args);
         },
 
@@ -821,7 +853,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   var win = window
     , doc = document
-    , twoHundo = /^20\d$/
+    , twoHundo = /^20d$/
     , byTag = 'getElementsByTagName'
     , readyState = 'readyState'
     , contentType = 'Content-Type'
@@ -906,7 +938,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   function urlappend (url, s) {
-    return url + (/\?/.test(url) ? '&' : '?') + s
+    return url + (/?/.test(url) ? '&' : '?') + s
   }
 
   function handleJsonp(o, fn, err, url) {
@@ -914,7 +946,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       , cbkey = o.jsonpCallback || 'callback' // the 'callback' key
       , cbval = o.jsonpCallbackName || reqwest.getcallbackPrefix(reqId)
       // , cbval = o.jsonpCallbackName || ('reqwest_' + reqId) // the 'callback' value
-      , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
+      , cbreg = new RegExp('((^|?|&)' + cbkey + ')=([^&]+)')
       , match = url.match(cbreg)
       , script = doc.createElement('script')
       , loaded = 0
@@ -1010,7 +1042,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   function setType(url) {
-    var m = url.match(/\.(json|jsonp|html|xml)(\?|$)/)
+    var m = url.match(/.(json|jsonp|html|xml)(?|$)/)
     return m ? m[1] : 'js'
   }
 
@@ -1183,7 +1215,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   // normalize newline variants according to spec -> CRLF
   function normalize(s) {
-    return s ? s.replace(/\r?\n/g, '\r\n') : ''
+    return s ? s.replace(/r?n/g, 'rn') : ''
   }
 
   function serial(el, cb) {
@@ -1347,7 +1379,7 @@ jsql.Events = (function() {
 
 
   // Regular expression used to split event strings
-  var eventSplitter = /\s+/
+  var eventSplitter = /s+/
 
 
   // A module that can be mixed in to *any object* in order to provide it
@@ -1507,8 +1539,7 @@ jsql.Events = (function() {
 
   return Events
 })();
-/* Build Time: August 7, 2013 04:40:59 */
+/* Build Time: September 29, 2013 11:07:15 */
 
 return jSQL;
-
 });
