@@ -1,4 +1,3 @@
-KISSY.add(function(S) {
 
 /*!
 Copyright (c) 2012 Guo Kai, http://jsql.us/
@@ -23,6 +22,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
+KISSY.add(function(S) {
 /*
     --------------- jSQL ---------------
     a SQL like database using javascript
@@ -133,7 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 db = utils.objectToArray(db);
             }
 
-            if(typeof(db) === 'string' && db.match(/^http(s)?:///igm)) {
+            if(typeof(db) === 'string' && db.match(/^http(s)?:\/\//igm)) {
                 var scope = arguments[2] || '*';
                 var proxyCallback = function(data) {
                     db = typeof(scope) === 'function' ? 
@@ -521,7 +521,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 error = args[3];
 
                 if(!uri.match('callback=')) {
-                    if(uri.match(/?/igm)) {
+                    if(uri.match(/\?/igm)) {
                         if(uri.lastIndexOf('&') === uri.length - 1) {
                             uri += 'callback=?&_t=' + utils.uuid();
                         } else {
@@ -853,7 +853,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   var win = window
     , doc = document
-    , twoHundo = /^20d$/
+    , twoHundo = /^20\d$/
     , byTag = 'getElementsByTagName'
     , readyState = 'readyState'
     , contentType = 'Content-Type'
@@ -938,7 +938,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   function urlappend (url, s) {
-    return url + (/?/.test(url) ? '&' : '?') + s
+    return url + (/\?/.test(url) ? '&' : '?') + s
   }
 
   function handleJsonp(o, fn, err, url) {
@@ -946,7 +946,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       , cbkey = o.jsonpCallback || 'callback' // the 'callback' key
       , cbval = o.jsonpCallbackName || reqwest.getcallbackPrefix(reqId)
       // , cbval = o.jsonpCallbackName || ('reqwest_' + reqId) // the 'callback' value
-      , cbreg = new RegExp('((^|?|&)' + cbkey + ')=([^&]+)')
+      , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
       , match = url.match(cbreg)
       , script = doc.createElement('script')
       , loaded = 0
@@ -1042,7 +1042,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   function setType(url) {
-    var m = url.match(/.(json|jsonp|html|xml)(?|$)/)
+    var m = url.match(/\.(json|jsonp|html|xml)(\?|$)/)
     return m ? m[1] : 'js'
   }
 
@@ -1215,7 +1215,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   // normalize newline variants according to spec -> CRLF
   function normalize(s) {
-    return s ? s.replace(/r?n/g, 'rn') : ''
+    return s ? s.replace(/\r?\n/g, '\r\n') : ''
   }
 
   function serial(el, cb) {
@@ -1379,7 +1379,7 @@ jsql.Events = (function() {
 
 
   // Regular expression used to split event strings
-  var eventSplitter = /s+/
+  var eventSplitter = /\s+/
 
 
   // A module that can be mixed in to *any object* in order to provide it
@@ -1539,7 +1539,6 @@ jsql.Events = (function() {
 
   return Events
 })();
-/* Build Time: September 29, 2013 11:07:15 */
-
 return jSQL;
 });
+/* Build Time: September 29, 2013 11:52:24 */
