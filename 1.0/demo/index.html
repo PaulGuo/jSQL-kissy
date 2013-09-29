@@ -28,8 +28,9 @@
         });
     }
 
-    S.use('gallery/jSQL-kissy/1.0/index', function (S, jSQL) {
+    S.use('gallery/jSQL-kissy/1.0/index', './data.js', function (S, jSQL, Data) {
          console.log(jSQL);
+         console.log(Data);
     })
 </script>
 </body>
