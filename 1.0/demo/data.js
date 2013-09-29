@@ -1,4 +1,5 @@
-{
+KISSY.add(function(S) {
+return {
     success: 1,
     flightList: [{
         flightNumber: "CZ310",
@@ -688,3 +689,4 @@
     tt: 1380432067918,
     pageCacheInfo: "uri: /flightListOfDirect.do cacheTime: 2013-09-29 11:21:07 key: 31c1f33de1495f455eb2c9792fb4ea7d cacheArea: 39 aliveTime: 120 cacheType: PAGE_CACHE_PAGE_TYPE"
 }
+});
